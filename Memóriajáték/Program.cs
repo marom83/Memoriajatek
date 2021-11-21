@@ -12,11 +12,13 @@ namespace Memóriajáték
         static void Main(string[] args)
         {
 
-            Console.WriteLine("Memóriajáték\n");
+            //Console.WriteLine("Memóriajáték\n");
 
             int[] kartyak = new int[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
 
             Random rnd = new Random();
+
+            int x = 0, y = 0;
 
             for (int i = 0; i < kartyakSzama; i++)
             {
@@ -37,8 +39,44 @@ namespace Memóriajáték
                     Console.Write("X ");
                 }
             }
-            
-            
+
+            Console.SetCursorPosition(0, 0);
+            do
+            {
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        if (y > 0) {
+                            y--;
+                            Console.SetCursorPosition(x, y);
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (y < 1)
+                        {
+                            y++;
+                            Console.SetCursorPosition(x, y);
+                        }
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (x < 8)
+                        {
+                            x+=2;
+                            Console.SetCursorPosition(x, y);
+                        }
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (x > 0)
+                        {
+                            x-=2;
+                            Console.SetCursorPosition(x, y);
+                        }
+                        break;
+                    case ConsoleKey.Spacebar:
+                        Console.Write(kartyak[y * 5 + x / 2]);                  
+                        break;
+                }
+            } while (true);
 
             Console.ReadLine();
         }

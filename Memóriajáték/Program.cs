@@ -10,14 +10,13 @@ namespace Memóriajáték
     {
         static void Main(string[] args)
         {
-            const int kartyakSzama = 10;
+            
             //Console.WriteLine("Memóriajáték\n");
 
             int[] kartyak = new int[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
 
+            const int kartyakSzama = 10;
             Random rnd = new Random();
-
-            int x = 0, y = 0;
 
             for (int i = 0; i < kartyakSzama; i++)
             {
@@ -39,10 +38,19 @@ namespace Memóriajáték
                 }
             }
 
-            Console.SetCursorPosition(0, 0);
+            int x = 0;
+            int y = 0;
             int kor = 0;
             int elsoKartyaXPozicioja = 0;
             int elsoKartyaYPozicioja = 0;
+            bool elsoJatekos = true;
+            int elsoJatekosParjai = 0;
+            int masodikJatekosParjai = 0;
+
+            Console.SetCursorPosition(0, 3);
+            Console.Write("Az 1. játékos következik.");
+            Console.SetCursorPosition(0, 0);
+
             do
             {
                 switch (Console.ReadKey(true).Key)
@@ -81,16 +89,44 @@ namespace Memóriajáték
                         if (kor % 2 == 0)
                         {
                             System.Threading.Thread.Sleep(2000);
-                            Console.Write("X");
-                            Console.SetCursorPosition(elsoKartyaXPozicioja, elsoKartyaYPozicioja);
-                            Console.Write("X");
+
+                            if (kartyak[y * 5 + x / 2] != kartyak[elsoKartyaYPozicioja * 5 + elsoKartyaXPozicioja / 2])
+                            {
+                                Console.Write("X");
+                                Console.SetCursorPosition(elsoKartyaXPozicioja, elsoKartyaYPozicioja);
+                                Console.Write("X");
+                            } else
+                            {
+                                Console.Write(" ");
+                                Console.SetCursorPosition(elsoKartyaXPozicioja, elsoKartyaYPozicioja);
+                                Console.Write(" ");
+                                if (elsoJatekos) { 
+                                    elsoJatekosParjai++; 
+                                } else
+                                {
+                                    masodikJatekosParjai++;
+                                }
+                                
+                            }
+                            Console.SetCursorPosition(x, y);
+
+                            Console.SetCursorPosition(0, 3);
+                            elsoJatekos = !elsoJatekos;
+                            if (elsoJatekosParjai + masodikJatekosParjai == 5)
+                            {
+                                Console.Write("Vége a játéknak! Gratulálunk a " + (elsoJatekosParjai > masodikJatekosParjai ? 1 : 2) + ". játékosnak!");
+                            }
+                            else
+                            {
+                                Console.Write("Az " + (elsoJatekos ? 1 : 2) + ". játékos következik.");
+                            }
                             Console.SetCursorPosition(x, y);
                         }
                         elsoKartyaXPozicioja = x;
                         elsoKartyaYPozicioja = y;
                         break;
                 }
-            } while (true);
+            } while (elsoJatekosParjai + masodikJatekosParjai < 5);
 
            
 

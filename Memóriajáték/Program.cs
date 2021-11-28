@@ -8,10 +8,9 @@ namespace Memóriajáték
 {
     class Program
     {
-        const int kartyakSzama = 10;
         static void Main(string[] args)
         {
-
+            const int kartyakSzama = 10;
             //Console.WriteLine("Memóriajáték\n");
 
             int[] kartyak = new int[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
@@ -41,6 +40,9 @@ namespace Memóriajáték
             }
 
             Console.SetCursorPosition(0, 0);
+            int kor = 0;
+            int elsoKartyaXPozicioja = 0;
+            int elsoKartyaYPozicioja = 0;
             do
             {
                 switch (Console.ReadKey(true).Key)
@@ -73,10 +75,24 @@ namespace Memóriajáték
                         }
                         break;
                     case ConsoleKey.Spacebar:
-                        Console.Write(kartyak[y * 5 + x / 2]);                  
+                        Console.Write(kartyak[y * 5 + x / 2]);
+                        Console.SetCursorPosition(x, y);
+                        kor++;
+                        if (kor % 2 == 0)
+                        {
+                            System.Threading.Thread.Sleep(2000);
+                            Console.Write("X");
+                            Console.SetCursorPosition(elsoKartyaXPozicioja, elsoKartyaYPozicioja);
+                            Console.Write("X");
+                            Console.SetCursorPosition(x, y);
+                        }
+                        elsoKartyaXPozicioja = x;
+                        elsoKartyaYPozicioja = y;
                         break;
                 }
             } while (true);
+
+           
 
             Console.ReadLine();
         }
